@@ -229,7 +229,22 @@ ENDASKPASS
 
                         git add "$GITOPS_MANIFEST_PATH"
                         git commit -m "chore: deploy $IMAGE_NAME:$IMAGE_TAG [skip ci]"
-                        git push origin "HEAD:$GITOPS_BRANCH"
+
+                        # Retry: another push to the GitOps repo may land between clone and push.
+                        pushed=0
+                        for i in 1 2 3 4 5; do
+                            if git push origin "HEAD:$GITOPS_BRANCH"; then
+                                pushed=1
+                                break
+                            fi
+                            echo "Push rejected (attempt $i/5); rebasing onto latest $GITOPS_BRANCH and retrying."
+                            sleep $((i * 2))
+                            git pull --rebase origin "$GITOPS_BRANCH"
+                        done
+                        if [ "$pushed" -ne 1 ]; then
+                            echo "ERROR: could not push manifest update after 5 attempts." >&2
+                            exit 1
+                        fi
                     '''
                 }
             }
