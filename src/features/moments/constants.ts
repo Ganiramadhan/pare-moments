@@ -1,0 +1,97 @@
+export const SLIDE_MS = 5000
+
+export const momentCopy = {
+  heroTitle: 'My Pare',
+  heroTitleAccent: 'Moments',
+  heroEyebrow: 'Kampung Inggris, Pare',
+  heroBody: 'Photos and little stories from my English journey. Press play and relive it with me.',
+  play: 'Play slideshow',
+  playFromHere: 'Play from here',
+  surprise: 'Surprise me',
+  browse: 'Browse moments',
+  momentsTitle: 'The story, day by day',
+  momentsSubtitle: 'Follow the path from the first day to the last.',
+  statMoments: 'moments',
+  statPhotos: 'photos',
+  statVideos: 'videos',
+  statDays: 'days',
+  filterAll: 'All moments',
+  filterMilestones: 'Milestones',
+  filterEmpty: 'No moments match this filter.',
+  empty: 'No moments yet. Your Pare story starts today!',
+  dayLabel: 'Day',
+  journeyLabel: 'Jump to a day',
+  mediaCount: (photos: number, videos: number) =>
+    [
+      photos > 0 ? (photos === 1 ? '1 photo' : `${photos} photos`) : '',
+      videos > 0 ? (videos === 1 ? '1 video' : `${videos} videos`) : '',
+    ]
+      .filter(Boolean)
+      .join(' · '),
+  milestoneBadge: 'Milestone',
+  back: 'All moments',
+  notFound: "We couldn't find this moment.",
+  previousMoment: 'Previous',
+  nextMoment: 'Next',
+  openPhoto: (index: number) => `Open photo ${index}`,
+  photoAlt: (title: string, index: number, total: number) => `${title}, photo ${index} of ${total}`,
+  videoLabel: (title: string) => `${title}, video`,
+  galleryTitle: 'All the photos',
+  gallerySubtitle: 'Every photo and video in one place. Tap one to see it big.',
+  galleryAll: 'Everything',
+  galleryPhotos: 'Photos',
+  galleryVideos: 'Videos',
+  galleryEmpty: 'Nothing here yet.',
+  galleryOpenMoment: (title: string) => `Open ${title}`,
+  joinTitle: 'Were you there too?',
+  joinBody: "Share your own photos and memories on the Friends' wall.",
+  joinAction: 'Share yours',
+  joinSoonBadge: 'Coming soon',
+  joinSoonBody:
+    "Soon you will be able to add your own photos and memories here. We're still building this part.",
+  joinSoonAction: "See what's coming",
+  practice: {
+    title: 'Practice your English',
+    subtitle:
+      'Verbs, grammar, listening and sentences: the things we use every day. Five minutes a day is enough.',
+    open: 'Open practice',
+    cards: [
+      {
+        to: '/practice/daily',
+        title: 'Daily mix',
+        text: '5 quick questions that change every day.',
+      },
+      {
+        to: '/practice/verbs',
+        title: 'Daily verbs',
+        text: 'V1, V2 and V3 in a table, cards and a quiz.',
+      },
+      {
+        to: '/practice/grammar',
+        title: 'Grammar',
+        text: 'Tenses, question words, the passive and more.',
+      },
+      {
+        to: '/practice/listening',
+        title: 'Listening',
+        text: 'Short stories, then questions and blanks.',
+      },
+      {
+        to: '/practice/sentences',
+        title: 'Sentence builder',
+        text: 'Put the words in the right order.',
+      },
+    ],
+  },
+  slideshow: {
+    close: 'Close slideshow',
+    previous: 'Previous photo',
+    next: 'Next photo',
+    pause: 'Pause',
+    play: 'Play',
+    fullscreen: 'Full screen',
+    mute: 'Mute',
+    unmute: 'Unmute',
+    counter: (index: number, total: number) => `${index} / ${total}`,
+  },
+}

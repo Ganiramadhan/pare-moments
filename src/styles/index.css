@@ -1,0 +1,295 @@
+@import 'tailwindcss';
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-deep: var(--primary-deep);
+  --color-on-primary: var(--on-primary);
+  --color-primary-soft: var(--primary-soft);
+  --color-secondary: var(--secondary);
+  --color-secondary-deep: var(--secondary-deep);
+  --color-on-secondary: var(--on-secondary);
+  --color-secondary-soft: var(--secondary-soft);
+  --font-sans: 'Plus Jakarta Sans', ui-sans-serif, system-ui, sans-serif;
+  --font-display: 'Fredoka', ui-rounded, 'Plus Jakarta Sans', system-ui, sans-serif;
+}
+
+/* Primary = teal (calm, tropical). Secondary = amber (warm sunset). "-deep" is the pressed edge
+   of chunky buttons, "-soft" a light tint for backgrounds. */
+:root {
+  --bg: #f6f8fb;
+  --surface: #ffffff;
+  --fg: #0f172a;
+  --muted: #5b6b82;
+  --line: #e2e8f0;
+  --primary: #0d9488;
+  --primary-deep: #0a6b62;
+  --on-primary: #ffffff;
+  --primary-soft: #d5f7f1;
+  --secondary: #f59e0b;
+  --secondary-deep: #b45309;
+  --on-secondary: #1c1203;
+  --secondary-soft: #fdf0cf;
+}
+
+/* Dark mode: the toggle sets data-theme; without it we follow the system setting. */
+:root[data-theme='dark'] {
+  --bg: #0b1120;
+  --surface: #131c31;
+  --fg: #f1f5f9;
+  --muted: #94a3b8;
+  --line: #22304a;
+  --primary: #2dd4bf;
+  --primary-deep: #0f766e;
+  --on-primary: #042f2c;
+  --primary-soft: #0f3d3a;
+  --secondary: #fbbf24;
+  --secondary-deep: #b45309;
+  --on-secondary: #1c1203;
+  --secondary-soft: #3b2d0b;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme='light']) {
+    --bg: #0b1120;
+    --surface: #131c31;
+    --fg: #f1f5f9;
+    --muted: #94a3b8;
+    --line: #22304a;
+    --primary: #2dd4bf;
+    --primary-deep: #0f766e;
+    --on-primary: #042f2c;
+    --primary-soft: #0f3d3a;
+    --secondary: #fbbf24;
+    --secondary-deep: #b45309;
+    --on-secondary: #1c1203;
+    --secondary-soft: #3b2d0b;
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* While the opening screen is on its way, keep the page covered in the splash color so there is
+   no flash of the page before it appears. The fade is a safety net if the app never loads. */
+:root[data-splash='pending'] body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  background: var(--primary);
+  animation: splash-safety 0.3s ease 6s forwards;
+}
+
+/* As the opening screen leaves, the page fades in underneath it (opacity only: a transform here
+   would break fixed elements such as the navigation dock). */
+:root[data-splash='exit'] #root {
+  animation: splash-reveal 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes splash-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes splash-safety {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+@theme {
+  --animate-fade-in: fade-in 0.9s ease both;
+  --animate-kenburns: kenburns 6s ease-out both;
+  --animate-progress: progress 5s linear both;
+  --animate-float: float 6s ease-in-out infinite;
+  --animate-float-slow: float 9s ease-in-out infinite;
+  --animate-spin-slow: spin 18s linear infinite;
+  --animate-marquee: marquee 40s linear infinite;
+  --animate-confetti: confetti 2.6s ease-in both;
+  --animate-firework: firework 1.2s cubic-bezier(0.15, 0.8, 0.3, 1) both;
+  /* "backwards" (not "both") so no transform stays behind after the animation: a leftover
+     transform would make fixed children (photo viewer, confetti) position against this box. */
+  --animate-pop: pop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  --animate-splash-pop: splash-pop 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+  --animate-splash-rise: splash-rise 0.7s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-splash-flash: splash-flash 0.6s ease-out both;
+  --animate-splash-bar: splash-bar 1.7s cubic-bezier(0.65, 0, 0.35, 1) both;
+  --animate-splash-out: splash-out 0.9s cubic-bezier(0.4, 0, 0.2, 1) both;
+  --animate-splash-content-out: splash-content-out 0.45s ease-in both;
+  --animate-twinkle: twinkle 1.6s ease-in-out infinite;
+  --animate-splash-fly: splash-fly 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-page-in: page-in 0.45s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes kenburns {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.06);
+    }
+  }
+  @keyframes progress {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  @keyframes float {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  @keyframes marquee {
+    from {
+      transform: translateX(0);
+    }
+    to {
+      transform: translateX(-50%);
+    }
+  }
+  /* A spark flies out of its burst. The rotate class turns it, so "up" points in its own direction. */
+  @keyframes firework {
+    0% {
+      transform: translateY(0) scaleY(0.6);
+      opacity: 0;
+    }
+    15% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-6rem) scaleY(1.4);
+      opacity: 0;
+    }
+  }
+  @keyframes confetti {
+    from {
+      transform: translateY(-10vh) rotate(0deg);
+      opacity: 1;
+    }
+    to {
+      transform: translateY(105vh) rotate(720deg);
+      opacity: 1;
+    }
+  }
+  @keyframes splash-pop {
+    0% {
+      transform: scale(0) rotate(-24deg);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1) rotate(-6deg);
+      opacity: 1;
+    }
+  }
+  @keyframes splash-rise {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes splash-flash {
+    0% {
+      opacity: 0;
+    }
+    15% {
+      opacity: 0.9;
+    }
+    100% {
+      opacity: 0;
+    }
+  }
+  @keyframes splash-bar {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+  /* The logo, title and photos float up and away a little before the backdrop does. */
+  @keyframes splash-content-out {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-14px);
+    }
+  }
+  /* The opening screen softly fades away while growing a little, as if the camera pulls back. */
+  @keyframes splash-out {
+    from {
+      opacity: 1;
+      transform: scale(1);
+    }
+    to {
+      opacity: 0;
+      transform: scale(1.08);
+    }
+  }
+  @keyframes twinkle {
+    0%,
+    100% {
+      transform: scale(0.8) rotate(0deg);
+      opacity: 0.5;
+    }
+    50% {
+      transform: scale(1.2) rotate(20deg);
+      opacity: 1;
+    }
+  }
+  @keyframes pop {
+    from {
+      transform: scale(0.6);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+}
