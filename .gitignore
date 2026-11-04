@@ -22,3 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Test output
+coverage
+
+# Local environment files (the shared defaults live in .env)
+.env.*.local
+
+# Notes for Claude Code: they stay on my computer, not in the repository
+CLAUDE.md
+.claude/
