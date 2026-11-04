@@ -123,7 +123,7 @@ metadata:
   name: pare-moments
   namespace: pare-moments
   annotations:
-    cert-manager.io/cluster-issuer: selfsigned-issuer   # ganti ke letsencrypt pas DNS udah pointing
+    cert-manager.io/cluster-issuer: letsencrypt-prod
 spec:
   ingressClassName: traefik
   rules:
